@@ -7,6 +7,7 @@ class Activity {
     protected $subject;
     protected $type;
     protected $dealId;
+    protected $userId;
 
     public function id (int $id) {
         $this->id = $id;
@@ -23,8 +24,13 @@ class Activity {
         return $this;
     }
 
-    public function dealId(int $dealId) {
+    public function deal(int $dealId) {
         $this->dealId = $dealId;
+        return $this;
+    }
+
+    public function user(int $userId) {
+        $this->userId = $userId;
         return $this;
     }
 
@@ -40,7 +46,8 @@ class Activity {
         $attributes = [
             'subject' => $this->subject,
             'type' => $this->type,
-            'deal_id' => $this->dealId
+            'deal_id' => $this->dealId,
+            'user_id' => $this->userId
         ];
 
         return array_filter($attributes, function($element) {

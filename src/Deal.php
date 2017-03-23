@@ -27,7 +27,12 @@ class Deal {
         return $this;
     }
 
-    public function value(int $value) {
+    public function user(int $userId) {
+        $this->userId = $userId;
+        return $this;
+    }
+
+    public function value(float $value) {
         $this->value = $value;
         return $this;
     }
@@ -69,7 +74,8 @@ class Deal {
             'currency' => $this->currency,
             'visible_to' => $this->visibleTo,
             'stage_id' => $this->stageId,
-            'status' => $this->status
+            'status' => $this->status,
+            'user_id' => $this->userId
         ];
 
         return array_filter($attributes, function($element) {
