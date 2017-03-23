@@ -1,0 +1,35 @@
+{
+  "name": "derjacques/laravel-pipedrive-notification-channel",
+  "description": "Allows Laravel sites to send notifications to Pipedrive",
+  "type": "library",
+  "authors": [
+    {
+      "name": "Manuel Thomsen",
+      "email": "manuel@manuelt.de"
+    }
+  ],
+  "minimum-stability": "dev",
+  "require": {
+    "php": ">=5.6.4",
+    "guzzlehttp/guzzle": "~6.2",
+    "illuminate/notifications": "5.3.*",
+    "illuminate/support": "5.1.*|5.2.*|5.3.*"
+  },
+  "require-dev": {
+    "mockery/mockery": "^0.9.5",
+    "phpunit/phpunit": "~5.7"
+  },
+  "autoload": {
+    "psr-4": {
+      "DerJacques\\PipedriveNotifications\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "DerJacques\\PipedriveNotifications\\Test\\": "tests"
+    }
+  },
+  "scripts": {
+    "test": "vendor/bin/phpunit"
+  }
+}
