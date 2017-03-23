@@ -44,7 +44,7 @@ class PipedriveChannel {
 
             foreach($deal->activities as $activity) {
 
-                $activity->dealId($dealId);
+                $activity->deal($dealId);
 
                 if($activity->isNew()) {
                     $response = $this->createActivity($activity->toPipedriveArray());

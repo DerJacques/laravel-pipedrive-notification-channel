@@ -15,6 +15,8 @@ class Deal {
     private $stageId;
     private $status;
     private $customAttributes;
+    private $userId;
+    
     public $activities = [];
 
     public function title(string $title) {
