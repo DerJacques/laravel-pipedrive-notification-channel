@@ -10,47 +10,11 @@ use PHPUnit\Framework\TestCase;
 
 class ChannelTest extends TestCase
 {
-    /** @test */
-    public function it_can_create_deals_based_on_a_notification()
-    {
-        $response = new Response(200, ['Content-Type' => 'application/json'], '{"data" : { "id" : 1 }}');
-        $client = Mockery::mock(Client::class);
-        $client->shouldReceive('request')
-            ->once()
-            ->with('POST', 'https://api.pipedrive.com/v1/deals?api_token=PipedriveToken',
-                [
-                    'form_params' => [
-                        'stage_id' => 1,
-                        'title' => 'new deal'
-                    ],
-                ])
-            ->andReturn($response);
-        $channel = new PipedriveChannel($client);
-        $channel->send(new TestNotifiable(), new NewDealNotification());
-    }
-
-    /** @test */
-    public function it_can_update_deals_based_on_a_notification()
-    {
-        $response = new Response(200, ['Content-Type' => 'application/json'], '{"data" : { "id" : 1 }}');
-        $client = Mockery::mock(Client::class);
-        $client->shouldReceive('request')
-            ->once()
-            ->with('PUT', 'https://api.pipedrive.com/v1/deals/1?api_token=PipedriveToken',
-                [
-                    'form_params' => [
-                        'title' => 'updated title'
-                    ]
-                ])
-            ->andReturn($response);
-        $channel = new PipedriveChannel($client);
-        $channel->send(new TestNotifiable(), new UpdatedDealNotification());
-    }
 
     /**
      * @test
     */
-    public function it_can_create_deals_with_activities()
+    public function it_can_create_and_update_deals_and_activities()
     {
         $response = new Response(200, ['Content-Type' => 'application/json'], '{"data" : { "id" : 1 }}');
         $client = Mockery::mock(Client::class);
@@ -90,6 +54,17 @@ class ChannelTest extends TestCase
                 ])
             ->andReturn($response);
 
+        $client->shouldReceive('request')
+            ->once()
+            ->with('POST', 'https://api.pipedrive.com/v1/activities?api_token=PipedriveToken',
+                [
+                    'form_params' => [
+                        'subject' => 'Buy milk',
+                        'type' => 'shopping'
+                    ],
+                ])
+            ->andReturn($response);
+
         $channel = new PipedriveChannel($client);
         $channel->send(new TestNotifiable(), new CreateDealWithActivitiesNotification());
     }
@@ -105,31 +80,6 @@ class TestNotifiable
     }
 }
 
-class NewDealNotification extends Notification
-{
-    public function toPipedrive($notifiable)
-    {
-        return
-            (new PipedriveMessage())
-                ->deal(function ($deal) {
-                    $deal->stage(1)
-                         ->title('new deal');
-                });
-    }
-}
-
-class UpdatedDealNotification extends Notification
-{
-    public function toPipedrive($notifiable)
-    {
-        return
-            (new PipedriveMessage())
-                ->deal(function ($deal) {
-                    $deal->id(1)
-                         ->title('updated title');
-                });
-    }
-}
 
 class CreateDealWithActivitiesNotification extends Notification
 {
@@ -149,6 +99,10 @@ class CreateDealWithActivitiesNotification extends Notification
                                       ->subject('Email Joe')
                                       ->type('mail');
                          });
+                })
+                ->activity(function ($activity) {
+                    $activity->subject('Buy milk')
+                             ->type('shopping');
                 });
     }
 }
