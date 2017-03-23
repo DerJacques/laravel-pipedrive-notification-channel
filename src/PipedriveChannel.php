@@ -25,21 +25,22 @@ class PipedriveChannel {
 
         $pipedriveMessage = $notification->toPipedrive($notifiable);
 
-        if($pipedriveMessage->isNewDeal()) {
-            $response = $this->createDeal($pipedriveMessage->toPipedriveArray());
-        }
+        foreach($pipedriveMessage->deals as $deal) {
+            if($deal->isNewDeal()) {
+                $response = $this->createDeal($deal->toPipedriveArray());
+            }
 
-        if(!$pipedriveMessage->isNewDeal()) {
-            $response = $this->updateDeal($pipedriveMessage->getDealId(), $pipedriveMessage->toPipedriveArray());
-        }
-
-        if ($response->getStatusCode() !== 200) {
-            throw \Exception('Request failed');
+            if(!$deal->isNewDeal()) {
+                $response = $this->updateDeal($deal->getDealId(), $deal->toPipedriveArray());
+            }
+            if ($response->getStatusCode() !== 200) {
+                throw \Exception('Request failed');
+            }
         }
     }
 
     protected function createDeal(array $attributes) {
-        if(!array_key_exists('title', $search)) {
+        if(!array_key_exists('title', $attributes)) {
             throw \Exception('Title required');
         }
 

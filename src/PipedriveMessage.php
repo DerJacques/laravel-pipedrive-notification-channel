@@ -2,81 +2,28 @@
 
 namespace DerJacques\PipedriveNotifications;
 
+use Closure;
+use DerJacques\PipedriveNotifications\Deal;
+use DerJacques\PipedriveNotifications\Activity;
+
 class PipedriveMessage {
-    private $title;
-    private $dealId;
-    private $value;
-    private $currency;
-    private $visibleTo;
-    private $stageId;
-    private $status;
-    private $customAttributes;
 
-    public function title(string $title) {
-        $this->title = $title;
+    public $deals = [];
+    public $activities = [];
+
+    public function deal(Closure $callback) {
+        $this->deals[] = $deal = new Deal;
+
+        $callback($deal);
+
         return $this;
     }
 
-    public function deal(int $dealId) {
-        $this->dealId = $dealId;
+    public function activity(Closure $callback) {
+        $this->activities[] = $activity = new Activity;
+
+        $callback($activity);
+
         return $this;
-    }
-
-    public function value(int $value) {
-        $this->value = $value;
-        return $this;
-    }
-
-    public function currency(string $currency) {
-        $this->currency = $currency;
-        return $this;
-    }
-
-    public function visibleTo(int $visibleTo) {
-        $this->visibleTo = $visibleTo;
-        return $this;
-    }
-
-    public function stage(int $stageId) {
-        $this->stageId = $stageId;
-        return $this;
-    }
-
-    public function status(string $status) {
-        $this->status = $status;
-        return $this;
-    }
-
-    public function won() {
-        $this->status = 'won';
-        return $this;
-    }
-
-    public function lost() {
-        $this->status = 'lost';
-        return $this;
-    }
-
-    public function toPipedriveArray() {
-        $attributes = [
-            'title' => $this->title,
-            'value' => $this->value,
-            'currency' => $this->currency,
-            'visible_to' => $this->visibleTo,
-            'stage_id' => $this->stageId,
-            'status' => $this->status
-        ];
-
-        return array_filter($attributes, function($element) {
-            return !is_null($element);
-        });
-    }
-
-    public function isNewDeal() {
-        return is_null($this->dealId);
-    }
-
-    public function getDealId() {
-        return $this->dealId;
     }
 }

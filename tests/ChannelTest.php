@@ -63,8 +63,10 @@ class NewDealNotification extends Notification
     {
         return
             (new PipedriveMessage())
-                ->stage(1)
-                ->title('new deal');
+                ->deal(function ($deal) {
+                    $deal->stage(1)
+                         ->title('new deal');
+                });
     }
 }
 
@@ -74,7 +76,9 @@ class UpdatedDealNotification extends Notification
     {
         return
             (new PipedriveMessage())
-                ->deal(1)
-                ->title('updated title');
+                ->deal(function ($deal) {
+                    $deal->id(1)
+                         ->title('updated title');
+                });
     }
 }
