@@ -1,6 +1,7 @@
 <?php
 
 namespace DerJacques\PipedriveNotifications;
+use DerJacques\PipedriveNotifications\Activity;
 
 class Deal {
 
@@ -12,6 +13,7 @@ class Deal {
     private $stageId;
     private $status;
     private $customAttributes;
+    public $activities = [];
 
     public function title(string $title) {
         $this->title = $title;
@@ -73,12 +75,19 @@ class Deal {
         });
     }
 
-    public function isNewDeal() {
+    public function isNew() {
         return is_null($this->id);
     }
 
-    public function getDealId() {
+    public function getId() {
         return $this->id;
     }
 
+    public function activity(Closure $callback) {
+        $this->activities[] = $activity = new Activity;
+
+        $callback($activity);
+
+        return $this;
+    }
 }

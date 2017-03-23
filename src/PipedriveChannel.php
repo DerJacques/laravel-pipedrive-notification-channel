@@ -26,15 +26,36 @@ class PipedriveChannel {
         $pipedriveMessage = $notification->toPipedrive($notifiable);
 
         foreach($pipedriveMessage->deals as $deal) {
-            if($deal->isNewDeal()) {
+            if($deal->isNew()) {
                 $response = $this->createDeal($deal->toPipedriveArray());
             }
 
-            if(!$deal->isNewDeal()) {
-                $response = $this->updateDeal($deal->getDealId(), $deal->toPipedriveArray());
+            if(!$deal->isNew()) {
+                $response = $this->updateDeal($deal->getId(), $deal->toPipedriveArray());
             }
+
             if ($response->getStatusCode() !== 200) {
                 throw \Exception('Request failed');
+            }
+
+            $responseBody = json_decode($response->getBody());
+            $dealId = $responseBody->data->id;
+
+            foreach($deal->activities as $activity) {
+
+                $activity->dealId($dealId);
+
+                if($activity->isNew()) {
+                    $response = $this->createActivity($activity->toPipedriveArray());
+                }
+
+                if(!$activity->isNew()) {
+                    $response = $this->updateActivity($activity->getId(), $activity->toPipedriveArray());
+                }
+
+                if ($response->getStatusCode() !== 200) {
+                    throw \Exception('Request failed');
+                }
             }
         }
     }
@@ -51,6 +72,26 @@ class PipedriveChannel {
 
     protected function updateDeal($dealId, $attributes) {
         return $this->client->request('PUT', self::API_ENDPOINT.'deals/'.$dealId.'?api_token='.$this->token, [
+            'form_params' => $attributes
+        ]);
+    }
+
+    protected function createActivity(array $attributes) {
+        if(!array_key_exists('subject', $attributes)) {
+            throw \Exception('Subject required');
+        }
+
+        if(!array_key_exists('type', $attributes)) {
+            throw \Exception('Type required');
+        }
+
+        return $this->client->request('POST', self::API_ENDPOINT.'activities?api_token='.$this->token, [
+            'form_params' => $attributes
+        ]);
+    }
+
+    protected function updateActivity($activityId, $attributes) {
+        return $this->client->request('PUT', self::API_ENDPOINT.'activities/'.$activityId.'?api_token='.$this->token, [
             'form_params' => $attributes
         ]);
     }
