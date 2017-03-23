@@ -1,7 +1,9 @@
 <?php
 
 namespace DerJacques\PipedriveNotifications;
+
 use DerJacques\PipedriveNotifications\Activity;
+use Closure;
 
 class Deal {
 

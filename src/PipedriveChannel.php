@@ -4,6 +4,7 @@ namespace DerJacques\PipedriveNotifications;
 
 use Illuminate\Notifications\Notification;
 use GuzzleHttp\Client;
+use Exception;
 
 class PipedriveChannel {
     const API_ENDPOINT = 'https://api.pipedrive.com/v1/';
@@ -20,7 +21,7 @@ class PipedriveChannel {
         $this->token = $notifiable->routeNotificationFor('Pipedrive');
 
         if (is_null($this->token)) {
-            throw \Exception();
+            throw new Exception('No Pipedrive Token provided');
         }
 
         $pipedriveMessage = $notification->toPipedrive($notifiable);
@@ -34,8 +35,8 @@ class PipedriveChannel {
                 $response = $this->updateDeal($deal->getId(), $deal->toPipedriveArray());
             }
 
-            if ($response->getStatusCode() !== 200) {
-                throw \Exception('Request failed');
+            if ($response->getStatusCode() >= 300 || $response->getStatusCode() <= 199) {
+                throw new Exception('Request failed');
             }
 
             $responseBody = json_decode($response->getBody());
@@ -53,8 +54,8 @@ class PipedriveChannel {
                     $response = $this->updateActivity($activity->getId(), $activity->toPipedriveArray());
                 }
 
-                if ($response->getStatusCode() !== 200) {
-                    throw \Exception('Request failed');
+                if ($response->getStatusCode() >= 300 || $response->getStatusCode() <= 19) {
+                    throw new Exception('Request failed');
                 }
             }
         }
