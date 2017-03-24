@@ -5,6 +5,7 @@ namespace DerJacques\PipedriveNotifications;
 use Closure;
 use DerJacques\PipedriveNotifications\Resources\Deal;
 use DerJacques\PipedriveNotifications\Resources\Activity;
+use GuzzleHttp\Client;
 
 class PipedriveMessage {
 

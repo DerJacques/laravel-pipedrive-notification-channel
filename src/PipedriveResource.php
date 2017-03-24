@@ -2,6 +2,8 @@
 
 namespace DerJacques\PipedriveNotifications;
 
+use GuzzleHttp\Client;
+
 class PipedriveResource {
 
     public $client;
@@ -19,13 +21,18 @@ class PipedriveResource {
         return isset($this->singularis) ? $this->singularis : strtolower((new \ReflectionClass($this))->getShortName());
     }
 
-    public function save($client, $token) {
+    public function setClient($client, $token) {
+        $this->client = $client;
+        $this->token = $token;
+    }
+
+    public function save() {
         if($this->isNew()) {
-            $response = $this->create($this->toPipedriveArray(), $client, $token);
+            $response = $this->create($this->toPipedriveArray(), $this->client, $this->token);
         }
 
         if(!$this->isNew()) {
-            $response = $this->update($this->toPipedriveArray(), $client, $token);
+            $response = $this->update($this->toPipedriveArray(), $this->client, $this->token);
         }
 
         if ($response->getStatusCode() >= 300 || $response->getStatusCode() <= 19) {
@@ -37,20 +44,20 @@ class PipedriveResource {
         return $response;
     }
 
-    protected function create(array $attributes, $client, $token) {
+    protected function create(array $attributes) {
         foreach($this->required as $requiredField) {
             if(!array_key_exists($requiredField, $attributes)) {
                 throw new Exception($requiredField.' required');
             }
         }
 
-        return $client->request('POST', self::API_ENDPOINT.$this->getPluralisName().'?api_token='.$token, [
+        return $this->client->request('POST', self::API_ENDPOINT.$this->getPluralisName().'?api_token='.$this->token, [
             'form_params' => $attributes
         ]);
     }
 
-    protected function update($attributes, $client, $token) {
-        return $client->request('PUT', self::API_ENDPOINT.$this->getPluralisName().'/'.$this->getId().'?api_token='.$token, [
+    protected function update($attributes) {
+        return $this->client->request('PUT', self::API_ENDPOINT.$this->getPluralisName().'/'.$this->getId().'?api_token='.$this->token, [
             'form_params' => $attributes
         ]);
     }
@@ -60,7 +67,8 @@ class PipedriveResource {
             foreach($this->$relationship as $resource) {
                 $parent = $this->getSingularisName();
                 $resource->$parent($parentId);
-                $resource->save($client, $token);
+                $resource->setClient($this->client, $this->token);
+                $resource->save();
             }
         }
     }

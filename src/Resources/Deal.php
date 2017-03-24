@@ -2,7 +2,7 @@
 
 namespace DerJacques\PipedriveNotifications\Resources;
 
-use DerJacques\PipedriveNotifications\Activity;
+use DerJacques\PipedriveNotifications\Resources\Activity;
 use DerJacques\PipedriveNotifications\PipedriveResource;
 use Closure;
 

@@ -26,11 +26,13 @@ class PipedriveChannel {
         $pipedriveMessage = $notification->toPipedrive($notifiable);
 
         foreach($pipedriveMessage->deals as $deal) {
-            $deal->save($this->client, $this->token);
+            $deal->setClient($this->client, $this->token);
+            $deal->save();
         }
 
         foreach($pipedriveMessage->activities as $activity) {
-            $activity->save($this->client, $this->token);
+            $activity->setClient($this->client, $this->token);
+            $activity->save();
         }
     }
 }
