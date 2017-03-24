@@ -64,11 +64,11 @@ class PipedriveResource {
 
     private function saveRelationships($parentId) {
         foreach($this->hasMany as $relationship) {
-            foreach($this->$relationship as $resource) {
+            foreach($this->$relationship as $child) {
                 $parent = $this->getSingularisName();
-                $resource->$parent($parentId);
-                $resource->setClient($this->client, $this->token);
-                $resource->save();
+                $child->$parent($parentId);
+                $child->setClient($this->client, $this->token);
+                $child->save();
             }
         }
     }
