@@ -34,7 +34,7 @@ class ExampleNotification extends Notification
         return [PipedriveChannel::class];
     }
 
-	public function toPipedrive($notifiable)
+    public function toPipedrive($notifiable)
     {
         return
             (new PipedriveMessage())
