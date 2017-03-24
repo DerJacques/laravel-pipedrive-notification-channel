@@ -71,7 +71,8 @@ class ChannelTest extends TestCase
                 [
                     'form_params' => [
                         'subject' => 'Buy milk',
-                        'type' => 'shopping'
+                        'type' => 'shopping',
+                        'due' => '2017-12-18'
                     ],
                 ])
             ->andReturn($response);
@@ -116,7 +117,8 @@ class CreateDealWithActivitiesNotification extends Notification
                 })
                 ->activity(function ($activity) {
                     $activity->subject('Buy milk')
-                             ->type('shopping');
+                             ->type('shopping')
+                             ->due('2017-12-18');
                 });
     }
 }

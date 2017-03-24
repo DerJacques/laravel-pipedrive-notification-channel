@@ -2,12 +2,14 @@
 
 namespace DerJacques\PipedriveNotifications\Resources;
 use DerJacques\PipedriveNotifications\PipedriveResource;
+use DateTime;
 
 class Activity extends PipedriveResource {
 
     protected $id;
     protected $subject;
     protected $type;
+    protected $due;
     protected $dealId;
     protected $userId;
 
@@ -44,6 +46,15 @@ class Activity extends PipedriveResource {
         return $this;
     }
 
+    public function due($due)
+    {
+        if (! $due instanceof DateTime) {
+            $due = new DateTime($due);
+        }
+        $this->due = $due->format('Y-m-d');
+        return $this;
+    }
+
     public function deal(int $dealId) {
         $this->dealId = $dealId;
         return $this;
@@ -67,7 +78,8 @@ class Activity extends PipedriveResource {
             'subject' => $this->subject,
             'type' => $this->type,
             'deal_id' => $this->dealId,
-            'user_id' => $this->userId
+            'user_id' => $this->userId,
+            'due' => $this->due
         ];
 
         return array_filter($attributes, function($element) {
