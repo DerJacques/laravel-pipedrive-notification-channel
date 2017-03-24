@@ -10,26 +10,17 @@ class Activity extends PipedriveResource {
     protected $subject;
     protected $type;
     protected $due;
+    protected $note;
     protected $dealId;
     protected $userId;
 
     protected $pluralis = 'activities';
     protected $singularis = 'activity';
 
-    protected $notes = [];
-
     protected $required = [
         'type',
         'subject'
     ];
-
-    public function note(Closure $callback) {
-        $this->notes[] = $note = new Note;
-
-        $callback($note);
-
-        return $this;
-    }
 
     public function id (int $id) {
         $this->id = $id;
@@ -53,6 +44,11 @@ class Activity extends PipedriveResource {
         }
         $this->due = $due->format('Y-m-d');
         return $this;
+    }
+
+    public function note(string $note)
+    {
+        $this->note = $note;
     }
 
     public function deal(int $dealId) {
@@ -79,7 +75,8 @@ class Activity extends PipedriveResource {
             'type' => $this->type,
             'deal_id' => $this->dealId,
             'user_id' => $this->userId,
-            'due' => $this->due
+            'due' => $this->due,
+            'note' => $this->note
         ];
 
         return array_filter($attributes, function($element) {
