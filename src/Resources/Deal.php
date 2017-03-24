@@ -1,11 +1,12 @@
 <?php
 
-namespace DerJacques\PipedriveNotifications;
+namespace DerJacques\PipedriveNotifications\Resources;
 
 use DerJacques\PipedriveNotifications\Activity;
+use DerJacques\PipedriveNotifications\PipedriveResource;
 use Closure;
 
-class Deal {
+class Deal extends PipedriveResource {
 
     private $title;
     private $id;
@@ -16,8 +17,15 @@ class Deal {
     private $status;
     private $customAttributes;
     private $userId;
-    
     public $activities = [];
+
+    protected $hasMany = [
+        'activities'
+    ];
+
+    protected $required = [
+        'title'
+    ];
 
     public function title(string $title) {
         $this->title = $title;

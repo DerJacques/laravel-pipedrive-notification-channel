@@ -1,13 +1,23 @@
 <?php
 
-namespace DerJacques\PipedriveNotifications;
+namespace DerJacques\PipedriveNotifications\Resources;
+use DerJacques\PipedriveNotifications\PipedriveResource;
 
-class Activity {
+class Activity extends PipedriveResource {
+
     protected $id;
     protected $subject;
     protected $type;
     protected $dealId;
     protected $userId;
+
+    protected $pluralis = 'activities';
+    protected $singularis = 'activity';
+
+    protected $required = [
+        'type',
+        'subject'
+    ];
 
     public function id (int $id) {
         $this->id = $id;
