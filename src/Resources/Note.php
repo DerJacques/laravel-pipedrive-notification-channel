@@ -3,44 +3,27 @@
 namespace DerJacques\PipedriveNotifications\Resources;
 use DerJacques\PipedriveNotifications\PipedriveResource;
 
-class Activity extends PipedriveResource {
+class Note extends PipedriveResource {
 
     protected $id;
-    protected $subject;
-    protected $type;
+    protected $content;
+    protected $personId;
     protected $dealId;
-    protected $userId;
 
-    protected $pluralis = 'activities';
-    protected $singularis = 'activity';
-
-    protected $notes = [];
+    protected $pluralis = 'notes';
+    protected $singularis = 'note';
 
     protected $required = [
-        'type',
-        'subject'
+        'content'
     ];
-
-    public function note(Closure $callback) {
-        $this->notes[] = $note = new Note;
-
-        $callback($note);
-
-        return $this;
-    }
 
     public function id (int $id) {
         $this->id = $id;
         return $this;
     }
 
-    public function subject(string $subject) {
-        $this->subject = $subject;
-        return $this;
-    }
-
-    public function type(string $type) {
-        $this->type = $type;
+    public function content(string $content) {
+        $this->content = $content;
         return $this;
     }
 
@@ -49,8 +32,8 @@ class Activity extends PipedriveResource {
         return $this;
     }
 
-    public function user(int $userId) {
-        $this->userId = $userId;
+    public function person(int $personId) {
+        $this->personId = $personId;
         return $this;
     }
 
@@ -64,10 +47,9 @@ class Activity extends PipedriveResource {
 
     public function toPipedriveArray() {
         $attributes = [
-            'subject' => $this->subject,
-            'type' => $this->type,
+            'content' => $this->content,
             'deal_id' => $this->dealId,
-            'user_id' => $this->userId
+            'person_id' => $this->personId
         ];
 
         return array_filter($attributes, function($element) {

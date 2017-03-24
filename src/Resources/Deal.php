@@ -3,6 +3,7 @@
 namespace DerJacques\PipedriveNotifications\Resources;
 
 use DerJacques\PipedriveNotifications\Resources\Activity;
+use DerJacques\PipedriveNotifications\Resources\Note;
 use DerJacques\PipedriveNotifications\PipedriveResource;
 use Closure;
 
@@ -18,14 +19,32 @@ class Deal extends PipedriveResource {
     private $customAttributes;
     private $userId;
     public $activities = [];
+    public $notes = [];
 
     protected $hasMany = [
-        'activities'
+        'activities',
+        'notes'
     ];
 
     protected $required = [
         'title'
     ];
+
+    public function activity(Closure $callback) {
+        $this->activities[] = $activity = new Activity;
+
+        $callback($activity);
+
+        return $this;
+    }
+
+    public function note(Closure $callback) {
+        $this->notes[] = $note = new Note;
+
+        $callback($note);
+
+        return $this;
+    }
 
     public function title(string $title) {
         $this->title = $title;
@@ -101,11 +120,4 @@ class Deal extends PipedriveResource {
         return $this->id;
     }
 
-    public function activity(Closure $callback) {
-        $this->activities[] = $activity = new Activity;
-
-        $callback($activity);
-
-        return $this;
-    }
 }

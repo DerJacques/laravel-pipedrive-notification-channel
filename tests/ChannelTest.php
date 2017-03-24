@@ -56,6 +56,17 @@ class ChannelTest extends TestCase
 
         $client->shouldReceive('request')
             ->once()
+            ->with('POST', 'https://api.pipedrive.com/v1/notes?api_token=PipedriveToken',
+                [
+                    'form_params' => [
+                        'deal_id' => 1,
+                        'content' => 'Link to deal'
+                    ],
+                ])
+            ->andReturn($response);
+
+        $client->shouldReceive('request')
+            ->once()
             ->with('POST', 'https://api.pipedrive.com/v1/activities?api_token=PipedriveToken',
                 [
                     'form_params' => [
@@ -98,6 +109,9 @@ class CreateDealWithActivitiesNotification extends Notification
                              $activity->id(3)
                                       ->subject('Email Joe')
                                       ->type('mail');
+                         })
+                         ->note(function ($note) {
+                             $note->content('Link to deal');
                          });
                 })
                 ->activity(function ($activity) {
