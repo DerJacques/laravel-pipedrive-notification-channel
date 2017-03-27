@@ -2,25 +2,24 @@
 
 namespace DerJacques\PipedriveNotifications\Test;
 
-use PHPUnit\Framework\TestCase;
+use DerJacques\PipedriveNotifications\Resources\Activity;
 use DerJacques\PipedriveNotifications\Resources\Deal;
 use DerJacques\PipedriveNotifications\Resources\Note;
-use DerJacques\PipedriveNotifications\Resources\Activity;
+use PHPUnit\Framework\TestCase;
 
 class DealTest extends TestCase
 {
-
     protected $deal;
 
     public function setUp()
     {
         parent::setUp();
-        $this->deal = new Deal;
+        $this->deal = new Deal();
     }
 
     /**
-    * @test
-    */
+     * @test
+     */
     public function it_can_be_assigned_an_id()
     {
         $this->deal->id(5);
@@ -28,18 +27,17 @@ class DealTest extends TestCase
     }
 
     /**
-    * @test
-    */
+     * @test
+     */
     public function it_can_be_assigned_a_title()
     {
         $this->deal->title('Title');
         $this->assertEquals('Title', $this->deal->toPipedriveArray()['title']);
     }
 
-
     /**
-    * @test
-    */
+     * @test
+     */
     public function it_can_be_assigned_a_value()
     {
         $this->deal->value(100);
@@ -47,8 +45,8 @@ class DealTest extends TestCase
     }
 
     /**
-    * @test
-    */
+     * @test
+     */
     public function it_can_be_assigned_a_currency()
     {
         $this->deal->currency('EUR');
@@ -56,8 +54,8 @@ class DealTest extends TestCase
     }
 
     /**
-    * @test
-    */
+     * @test
+     */
     public function it_can_be_assigned_a_visibility()
     {
         $this->deal->visibleTo(3);
@@ -65,8 +63,8 @@ class DealTest extends TestCase
     }
 
     /**
-    * @test
-    */
+     * @test
+     */
     public function it_can_be_assigned_a_stage()
     {
         $this->deal->stage(2);
@@ -74,8 +72,8 @@ class DealTest extends TestCase
     }
 
     /**
-    * @test
-    */
+     * @test
+     */
     public function it_can_be_assigned_a_status_manually()
     {
         $this->deal->status('open');
@@ -83,8 +81,8 @@ class DealTest extends TestCase
     }
 
     /**
-    * @test
-    */
+     * @test
+     */
     public function it_can_be_won()
     {
         $this->deal->won();
@@ -92,8 +90,8 @@ class DealTest extends TestCase
     }
 
     /**
-    * @test
-    */
+     * @test
+     */
     public function it_can_be_lost()
     {
         $this->deal->lost();
@@ -101,8 +99,8 @@ class DealTest extends TestCase
     }
 
     /**
-    * @test
-    */
+     * @test
+     */
     public function it_can_be_opened()
     {
         $this->deal->open();
@@ -110,8 +108,8 @@ class DealTest extends TestCase
     }
 
     /**
-    * @test
-    */
+     * @test
+     */
     public function it_can_show_if_it_is_new()
     {
         $this->deal->id(null);
@@ -122,8 +120,8 @@ class DealTest extends TestCase
     }
 
     /**
-    * @test
-    */
+     * @test
+     */
     public function it_can_be_assigned_a_user()
     {
         $this->deal->user(5);
@@ -132,7 +130,7 @@ class DealTest extends TestCase
 
     /**
      * @test
-    */
+     */
     public function it_accepts_activities()
     {
         $this->deal->activity(function ($activity) {
@@ -145,7 +143,7 @@ class DealTest extends TestCase
 
     /**
      * @test
-    */
+     */
     public function it_accepts_notes()
     {
         $this->deal->note(function ($note) {
@@ -155,5 +153,4 @@ class DealTest extends TestCase
         $this->assertCount(1, $this->deal->notes);
         $this->assertInstanceOf(Note::class, $this->deal->notes[0]);
     }
-
 }
