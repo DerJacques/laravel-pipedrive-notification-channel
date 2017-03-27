@@ -67,6 +67,16 @@ class ActivityTest extends TestCase
     /**
      * @test
      */
+    public function it_can_reset_the_due_date()
+    {
+        $this->activity->due(null);
+
+        $this->assertArrayNotHasKey('due_date', $this->activity->toPipedriveArray());
+    }
+
+    /**
+     * @test
+     */
     public function it_can_be_assigned_a_note()
     {
         $this->activity->note('Note');

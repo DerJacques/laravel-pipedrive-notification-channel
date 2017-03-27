@@ -9,6 +9,7 @@ use PHPUnit\Framework\TestCase;
 use Illuminate\Notifications\Notification;
 use DerJacques\PipedriveNotifications\PipedriveChannel;
 use DerJacques\PipedriveNotifications\PipedriveMessage;
+use DerJacques\PipedriveNotifications\Exceptions\InvalidConfiguration;
 
 class ChannelTest extends TestCase
 {
@@ -85,7 +86,22 @@ class ChannelTest extends TestCase
         $channel = new PipedriveChannel($client);
         $channel->send(new TestNotifiable(), new CreateDealWithActivitiesNotification());
     }
+
+    /**
+     * @test
+     */
+    public function it_throws_an_exception_when_no_token_is_provided()
+    {
+        $this->setExpectedException(InvalidConfiguration::class);
+
+        $client = Mockery::mock(Client::class);
+
+        $channel = new PipedriveChannel($client);
+        $channel->send(new TestNotifiableWithoutPipedriveToken(), new CreateDealWithActivitiesNotification());
+    }
+
 }
+
 class TestNotifiable
 {
     use \Illuminate\Notifications\Notifiable;
@@ -93,6 +109,16 @@ class TestNotifiable
     public function routeNotificationForPipedrive()
     {
         return 'PipedriveToken';
+    }
+}
+
+class TestNotifiableWithoutPipedriveToken
+{
+    use \Illuminate\Notifications\Notifiable;
+
+    public function routeNotificationForPipedrive()
+    {
+        return null;
     }
 }
 
