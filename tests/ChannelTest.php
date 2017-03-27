@@ -12,6 +12,10 @@ use DerJacques\PipedriveNotifications\PipedriveMessage;
 
 class ChannelTest extends TestCase
 {
+    public function tearDown() {
+        Mockery::close();
+    }
+
     /**
      * @test
      */
