@@ -22,7 +22,7 @@ class Activity extends PipedriveResource {
         'subject'
     ];
 
-    public function id (int $id) {
+    public function id (int $id = null) {
         $this->id = $id;
         return $this;
     }
