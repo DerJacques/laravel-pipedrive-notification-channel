@@ -1,7 +1,7 @@
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/derjacques/laravel-pipedrive-notification-channel.svg?style=flat-square)](https://packagist.org/packages/derjacques/laravel-pipedrive-notification-channel)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](license.md)
-[Build Status](https://img.shields.io/travis/DerJacques/laravel-pipedrive-notification-channel/master.svg?style=flat-square)
-[Scrutinizer](https://scrutinizer-ci.com/g/DerJacques/laravel-pipedrive-notification-channel/badges/quality-score.png?b=master)
+![Build Status](https://img.shields.io/travis/DerJacques/laravel-pipedrive-notification-channel/master.svg?style=flat-square)
+![Scrutinizer](https://scrutinizer-ci.com/g/DerJacques/laravel-pipedrive-notification-channel/badges/quality-score.png?b=master)
 [![StyleCI](https://styleci.io/repos/86063903/shield)](https://styleci.io/repos/86063903)
 
 # Laravel Pipedrive Notification Channel
