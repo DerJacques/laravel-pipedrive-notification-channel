@@ -1,5 +1,7 @@
 <?php
+
 namespace DerJacques\PipedriveNotifications\Test;
+
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Notifications\Notification;
