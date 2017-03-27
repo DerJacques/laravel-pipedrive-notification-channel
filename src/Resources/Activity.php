@@ -9,7 +9,7 @@ class Activity extends PipedriveResource {
     protected $id;
     protected $subject;
     protected $type;
-    protected $due;
+    protected $dueDate;
     protected $note;
     protected $dealId;
     protected $userId;
@@ -42,7 +42,7 @@ class Activity extends PipedriveResource {
         if (! $due instanceof DateTime) {
             $due = new DateTime($due);
         }
-        $this->due = $due->format('Y-m-d');
+        $this->dueDate = $due->format('Y-m-d');
         return $this;
     }
 
@@ -75,8 +75,8 @@ class Activity extends PipedriveResource {
             'type' => $this->type,
             'deal_id' => $this->dealId,
             'user_id' => $this->userId,
-            'due' => $this->due,
-            'note' => $this->note
+            'note' => $this->note,
+            'due_date' => $this->dueDate
         ];
 
         return array_filter($attributes, function($element) {
