@@ -2,23 +2,22 @@
 
 namespace DerJacques\PipedriveNotifications\Test;
 
-use PHPUnit\Framework\TestCase;
 use DerJacques\PipedriveNotifications\Resources\Activity;
+use PHPUnit\Framework\TestCase;
 
 class ActivityTest extends TestCase
 {
-
     protected $activity;
 
     public function setUp()
     {
         parent::setUp();
-        $this->activity = new Activity;
+        $this->activity = new Activity();
     }
 
     /**
-    * @test
-    */
+     * @test
+     */
     public function it_can_be_assigned_an_id()
     {
         $this->activity->id(5);
@@ -26,18 +25,17 @@ class ActivityTest extends TestCase
     }
 
     /**
-    * @test
-    */
+     * @test
+     */
     public function it_can_be_assigned_a_subject()
     {
         $this->activity->subject('Subject');
         $this->assertEquals('Subject', $this->activity->toPipedriveArray()['subject']);
     }
 
-
     /**
-    * @test
-    */
+     * @test
+     */
     public function it_can_be_assigned_a_type()
     {
         $this->activity->type('call');
@@ -45,8 +43,8 @@ class ActivityTest extends TestCase
     }
 
     /**
-    * @test
-    */
+     * @test
+     */
     public function it_can_be_assigned_a_due_date_from_a_string()
     {
         $tomorrowDate = new \DateTime('tomorrow');
@@ -56,8 +54,8 @@ class ActivityTest extends TestCase
     }
 
     /**
-    * @test
-    */
+     * @test
+     */
     public function it_can_be_assigned_a_due_date_from_datetime()
     {
         $date = new \DateTime('tomorrow');
@@ -67,8 +65,8 @@ class ActivityTest extends TestCase
     }
 
     /**
-    * @test
-    */
+     * @test
+     */
     public function it_can_be_assigned_a_note()
     {
         $this->activity->note('Note');
@@ -76,8 +74,8 @@ class ActivityTest extends TestCase
     }
 
     /**
-    * @test
-    */
+     * @test
+     */
     public function it_can_be_assigned_a_user()
     {
         $this->activity->user(4);
@@ -85,8 +83,8 @@ class ActivityTest extends TestCase
     }
 
     /**
-    * @test
-    */
+     * @test
+     */
     public function it_can_show_if_it_is_new()
     {
         $this->activity->id(null);

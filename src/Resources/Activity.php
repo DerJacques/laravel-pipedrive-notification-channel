@@ -1,11 +1,12 @@
 <?php
 
 namespace DerJacques\PipedriveNotifications\Resources;
-use DerJacques\PipedriveNotifications\PipedriveResource;
+
 use DateTime;
+use DerJacques\PipedriveNotifications\PipedriveResource;
 
-class Activity extends PipedriveResource {
-
+class Activity extends PipedriveResource
+{
     protected $id;
     protected $subject;
     protected $type;
@@ -19,36 +20,44 @@ class Activity extends PipedriveResource {
 
     protected $required = [
         'type',
-        'subject'
+        'subject',
     ];
 
-    public function id (int $id = null) {
+    public function id(int $id = null)
+    {
         $this->id = $id;
+
         return $this;
     }
 
-    public function subject(string $subject) {
+    public function subject(string $subject)
+    {
         $this->subject = $subject;
+
         return $this;
     }
 
-    public function type(string $type) {
+    public function type(string $type)
+    {
         $this->type = $type;
+
         return $this;
     }
 
     public function due($due = null)
     {
-        if(is_null($due)) {
+        if (is_null($due)) {
             $this->dueDate = null;
+
             return $this;
         }
 
-        if (! $due instanceof DateTime) {
+        if (!$due instanceof DateTime) {
             $due = new DateTime($due);
         }
 
         $this->dueDate = $due->format('Y-m-d');
+
         return $this;
     }
 
@@ -57,35 +66,42 @@ class Activity extends PipedriveResource {
         $this->note = $note;
     }
 
-    public function deal(int $dealId = null) {
+    public function deal(int $dealId = null)
+    {
         $this->dealId = $dealId;
+
         return $this;
     }
 
-    public function user(int $userId = null) {
+    public function user(int $userId = null)
+    {
         $this->userId = $userId;
+
         return $this;
     }
 
-    public function isNew() {
+    public function isNew()
+    {
         return is_null($this->id);
     }
 
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
-    public function toPipedriveArray() {
+    public function toPipedriveArray()
+    {
         $attributes = [
-            'subject' => $this->subject,
-            'type' => $this->type,
-            'deal_id' => $this->dealId,
-            'user_id' => $this->userId,
-            'note' => $this->note,
-            'due_date' => $this->dueDate
+            'subject'  => $this->subject,
+            'type'     => $this->type,
+            'deal_id'  => $this->dealId,
+            'user_id'  => $this->userId,
+            'note'     => $this->note,
+            'due_date' => $this->dueDate,
         ];
 
-        return array_filter($attributes, function($element) {
+        return array_filter($attributes, function ($element) {
             return !is_null($element);
         });
     }

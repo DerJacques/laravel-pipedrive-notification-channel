@@ -2,20 +2,19 @@
 
 namespace DerJacques\PipedriveNotifications\Test;
 
+use DerJacques\PipedriveNotifications\PipedriveChannel;
+use DerJacques\PipedriveNotifications\PipedriveMessage;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Notifications\Notification;
 use Mockery;
-use DerJacques\PipedriveNotifications\PipedriveChannel;
-use DerJacques\PipedriveNotifications\PipedriveMessage;
 use PHPUnit\Framework\TestCase;
 
 class ChannelTest extends TestCase
 {
-
     /**
      * @test
-    */
+     */
     public function it_can_create_and_update_deals_and_activities()
     {
         $response = new Response(200, ['Content-Type' => 'application/json'], '{"data" : { "id" : 1 }}');
@@ -27,7 +26,7 @@ class ChannelTest extends TestCase
                 [
                     'form_params' => [
                         'stage_id' => 1,
-                        'title' => 'new deal'
+                        'title'    => 'new deal',
                     ],
                 ])
             ->andReturn($response);
@@ -39,7 +38,7 @@ class ChannelTest extends TestCase
                     'form_params' => [
                         'deal_id' => 1,
                         'subject' => 'Call Jane',
-                        'type' => 'call'
+                        'type'    => 'call',
                     ],
                 ])
             ->andReturn($response);
@@ -51,7 +50,7 @@ class ChannelTest extends TestCase
                     'form_params' => [
                         'deal_id' => 1,
                         'subject' => 'Email Joe',
-                        'type' => 'mail'
+                        'type'    => 'mail',
                     ],
                 ])
             ->andReturn($response);
@@ -62,7 +61,7 @@ class ChannelTest extends TestCase
                 [
                     'form_params' => [
                         'deal_id' => 1,
-                        'content' => 'Link to deal'
+                        'content' => 'Link to deal',
                     ],
                 ])
             ->andReturn($response);
@@ -72,9 +71,9 @@ class ChannelTest extends TestCase
             ->with('POST', 'https://api.pipedrive.com/v1/activities?api_token=PipedriveToken',
                 [
                     'form_params' => [
-                        'subject' => 'Buy milk',
-                        'type' => 'shopping',
-                        'due_date' => '2017-12-18'
+                        'subject'  => 'Buy milk',
+                        'type'     => 'shopping',
+                        'due_date' => '2017-12-18',
                     ],
                 ])
             ->andReturn($response);
@@ -82,7 +81,6 @@ class ChannelTest extends TestCase
         $channel = new PipedriveChannel($client);
         $channel->send(new TestNotifiable(), new CreateDealWithActivitiesNotification());
     }
-
 }
 class TestNotifiable
 {
@@ -93,7 +91,6 @@ class TestNotifiable
         return 'PipedriveToken';
     }
 }
-
 
 class CreateDealWithActivitiesNotification extends Notification
 {
