@@ -2,8 +2,8 @@
 
 namespace DerJacques\PipedriveNotifications\Test;
 
-use DerJacques\PipedriveNotifications\Resources\Activity;
 use PHPUnit\Framework\TestCase;
+use DerJacques\PipedriveNotifications\Resources\Activity;
 
 class ActivityTest extends TestCase
 {

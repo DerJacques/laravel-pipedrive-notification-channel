@@ -52,7 +52,7 @@ class Activity extends PipedriveResource
             return $this;
         }
 
-        if (!$due instanceof DateTime) {
+        if (! $due instanceof DateTime) {
             $due = new DateTime($due);
         }
 
@@ -102,7 +102,7 @@ class Activity extends PipedriveResource
         ];
 
         return array_filter($attributes, function ($element) {
-            return !is_null($element);
+            return ! is_null($element);
         });
     }
 }
