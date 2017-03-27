@@ -96,6 +96,11 @@ class Deal extends PipedriveResource {
         return $this;
     }
 
+    public function open() {
+        $this->status = 'open';
+        return $this;
+    }
+
     public function toPipedriveArray() {
         $attributes = [
             'title' => $this->title,
