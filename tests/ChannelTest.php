@@ -2,13 +2,13 @@
 
 namespace DerJacques\PipedriveNotifications\Test;
 
-use DerJacques\PipedriveNotifications\PipedriveChannel;
-use DerJacques\PipedriveNotifications\PipedriveMessage;
+use Mockery;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Response;
-use Illuminate\Notifications\Notification;
-use Mockery;
 use PHPUnit\Framework\TestCase;
+use Illuminate\Notifications\Notification;
+use DerJacques\PipedriveNotifications\PipedriveChannel;
+use DerJacques\PipedriveNotifications\PipedriveMessage;
 
 class ChannelTest extends TestCase
 {

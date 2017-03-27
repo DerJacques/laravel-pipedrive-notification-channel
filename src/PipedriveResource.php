@@ -35,7 +35,7 @@ class PipedriveResource
             $response = $this->create($this->toPipedriveArray(), $this->client, $this->token);
         }
 
-        if (!$this->isNew()) {
+        if (! $this->isNew()) {
             $response = $this->update($this->toPipedriveArray(), $this->client, $this->token);
         }
 
@@ -51,7 +51,7 @@ class PipedriveResource
     protected function create(array $attributes)
     {
         foreach ($this->required as $requiredField) {
-            if (!array_key_exists($requiredField, $attributes)) {
+            if (! array_key_exists($requiredField, $attributes)) {
                 throw new Exception($requiredField.' required');
             }
         }

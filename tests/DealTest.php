@@ -2,10 +2,10 @@
 
 namespace DerJacques\PipedriveNotifications\Test;
 
-use DerJacques\PipedriveNotifications\Resources\Activity;
+use PHPUnit\Framework\TestCase;
 use DerJacques\PipedriveNotifications\Resources\Deal;
 use DerJacques\PipedriveNotifications\Resources\Note;
-use PHPUnit\Framework\TestCase;
+use DerJacques\PipedriveNotifications\Resources\Activity;
 
 class DealTest extends TestCase
 {

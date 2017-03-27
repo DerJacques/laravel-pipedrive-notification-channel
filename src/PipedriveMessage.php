@@ -3,9 +3,9 @@
 namespace DerJacques\PipedriveNotifications;
 
 use Closure;
-use DerJacques\PipedriveNotifications\Resources\Activity;
 use DerJacques\PipedriveNotifications\Resources\Deal;
 use DerJacques\PipedriveNotifications\Resources\Note;
+use DerJacques\PipedriveNotifications\Resources\Activity;
 
 class PipedriveMessage
 {

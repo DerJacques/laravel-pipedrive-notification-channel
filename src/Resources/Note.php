@@ -65,7 +65,7 @@ class Note extends PipedriveResource
         ];
 
         return array_filter($attributes, function ($element) {
-            return !is_null($element);
+            return ! is_null($element);
         });
     }
 }
