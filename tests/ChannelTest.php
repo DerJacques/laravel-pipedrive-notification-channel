@@ -74,7 +74,7 @@ class ChannelTest extends TestCase
                     'form_params' => [
                         'subject' => 'Buy milk',
                         'type' => 'shopping',
-                        'due' => '2017-12-18'
+                        'due_date' => '2017-12-18'
                     ],
                 ])
             ->andReturn($response);
