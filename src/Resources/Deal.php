@@ -46,42 +46,42 @@ class Deal extends PipedriveResource {
         return $this;
     }
 
-    public function title(string $title) {
+    public function title(string $title = null) {
         $this->title = $title;
         return $this;
     }
 
-    public function id(int $id) {
+    public function id(int $id = null) {
         $this->id = $id;
         return $this;
     }
 
-    public function user(int $userId) {
+    public function user(int $userId = null) {
         $this->userId = $userId;
         return $this;
     }
 
-    public function value(float $value) {
+    public function value(float $value = null) {
         $this->value = $value;
         return $this;
     }
 
-    public function currency(string $currency) {
+    public function currency(string $currency = null) {
         $this->currency = $currency;
         return $this;
     }
 
-    public function visibleTo(int $visibleTo) {
+    public function visibleTo(int $visibleTo = null) {
         $this->visibleTo = $visibleTo;
         return $this;
     }
 
-    public function stage(int $stageId) {
+    public function stage(int $stageId = null) {
         $this->stageId = $stageId;
         return $this;
     }
 
-    public function status(string $status) {
+    public function status(string $status = null) {
         $this->status = $status;
         return $this;
     }

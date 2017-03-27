@@ -27,12 +27,12 @@ class Note extends PipedriveResource {
         return $this;
     }
 
-    public function deal(int $dealId) {
+    public function deal(int $dealId = null) {
         $this->dealId = $dealId;
         return $this;
     }
 
-    public function person(int $personId) {
+    public function person(int $personId = null) {
         $this->personId = $personId;
         return $this;
     }

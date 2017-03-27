@@ -37,26 +37,32 @@ class Activity extends PipedriveResource {
         return $this;
     }
 
-    public function due($due)
+    public function due($due = null)
     {
+        if(is_null($due)) {
+            $this->dueDate = null;
+            return $this;
+        }
+
         if (! $due instanceof DateTime) {
             $due = new DateTime($due);
         }
+
         $this->dueDate = $due->format('Y-m-d');
         return $this;
     }
 
-    public function note(string $note)
+    public function note(string $note = null)
     {
         $this->note = $note;
     }
 
-    public function deal(int $dealId) {
+    public function deal(int $dealId = null) {
         $this->dealId = $dealId;
         return $this;
     }
 
-    public function user(int $userId) {
+    public function user(int $userId = null) {
         $this->userId = $userId;
         return $this;
     }
