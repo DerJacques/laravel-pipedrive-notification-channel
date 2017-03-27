@@ -2,10 +2,9 @@
 
 namespace DerJacques\PipedriveNotifications;
 
-use Exception;
-use DerJacques\PipedriveNotifications\Exceptions\InvalidConfiguration;
 use GuzzleHttp\Client;
 use Illuminate\Notifications\Notification;
+use DerJacques\PipedriveNotifications\Exceptions\InvalidConfiguration;
 
 class PipedriveChannel
 {

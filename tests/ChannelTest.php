@@ -100,7 +100,6 @@ class ChannelTest extends TestCase
         $channel = new PipedriveChannel($client);
         $channel->send(new TestNotifiableWithoutPipedriveToken(), new CreateDealWithActivitiesNotification());
     }
-
 }
 
 class TestNotifiable
@@ -119,7 +118,6 @@ class TestNotifiableWithoutPipedriveToken
 
     public function routeNotificationForPipedrive()
     {
-        return null;
     }
 }
 
