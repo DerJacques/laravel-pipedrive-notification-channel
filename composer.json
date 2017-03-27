@@ -8,6 +8,7 @@
       "email": "manuel@manuelt.de"
     }
   ],
+  "license": "MIT",
   "minimum-stability": "dev",
   "require": {
     "php": ">=7.0.0",
