@@ -16,7 +16,6 @@ class Deal extends PipedriveResource {
     private $visibleTo;
     private $stageId;
     private $status;
-    private $customAttributes;
     private $userId;
     public $activities = [];
     public $notes = [];
