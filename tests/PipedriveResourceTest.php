@@ -6,12 +6,9 @@ use Mockery;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
-use Illuminate\Notifications\Notification;
-use DerJacques\PipedriveNotifications\PipedriveChannel;
-use DerJacques\PipedriveNotifications\PipedriveMessage;
-use DerJacques\PipedriveNotifications\Exceptions\InvalidConfiguration;
-use DerJacques\PipedriveNotifications\Exceptions\FailedRequest;
 use DerJacques\PipedriveNotifications\PipedriveResource;
+use DerJacques\PipedriveNotifications\Exceptions\FailedRequest;
+use DerJacques\PipedriveNotifications\Exceptions\InvalidConfiguration;
 
 class PipedriveResourceTest extends TestCase
 {
@@ -159,7 +156,6 @@ class PipedriveResourceTest extends TestCase
         $resource = new PipedriveResource();
         $this->assertTrue(is_array($resource->toPipedriveArray()));
     }
-
 }
 
 class TestResource extends PipedriveResource

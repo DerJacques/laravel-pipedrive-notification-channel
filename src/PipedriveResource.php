@@ -32,12 +32,12 @@ class PipedriveResource
 
     public function getPluralName()
     {
-        return !is_null($this->plural) ? $this->plural : strtolower((new \ReflectionClass($this))->getShortName()).'s';
+        return ! is_null($this->plural) ? $this->plural : strtolower((new \ReflectionClass($this))->getShortName()).'s';
     }
 
     public function getSingularName()
     {
-        return !is_null($this->singular) ? $this->singular : strtolower((new \ReflectionClass($this))->getShortName());
+        return ! is_null($this->singular) ? $this->singular : strtolower((new \ReflectionClass($this))->getShortName());
     }
 
     public function setClient($client, $token)
@@ -46,11 +46,13 @@ class PipedriveResource
         $this->token = $token;
     }
 
-    public function getClient() {
+    public function getClient()
+    {
         return $this->client;
     }
 
-    public function getToken() {
+    public function getToken()
+    {
         return $this->token;
     }
 
