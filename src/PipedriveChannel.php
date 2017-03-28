@@ -3,7 +3,6 @@
 namespace DerJacques\PipedriveNotifications;
 
 use GuzzleHttp\Client;
-use Illuminate\Notifications\Notification;
 use DerJacques\PipedriveNotifications\Exceptions\InvalidConfiguration;
 
 class PipedriveChannel
@@ -16,7 +15,7 @@ class PipedriveChannel
         $this->client = $client;
     }
 
-    public function send($notifiable, Notification $notification)
+    public function send($notifiable, $notification)
     {
         $this->token = $notifiable->routeNotificationFor('Pipedrive');
 
