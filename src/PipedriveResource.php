@@ -107,18 +107,18 @@ class PipedriveResource
         }
     }
 
-    private function checkConfiguration() {
+    private function checkConfiguration()
+    {
         if (is_null($this->client) || is_null($this->token)) {
             throw InvalidConfiguration::noClientProvided();
         }
     }
 
-    private function sendRequest() {
+    private function sendRequest()
+    {
         if ($this->isNew()) {
             $response = $this->create($this->toPipedriveArray());
-        }
-
-        else {
+        } else {
             $response = $this->update($this->toPipedriveArray());
         }
 
