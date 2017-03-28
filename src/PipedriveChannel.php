@@ -19,24 +19,31 @@ class PipedriveChannel
     {
         $this->token = $notifiable->routeNotificationFor('Pipedrive');
 
+        $this->validate($notification);
+
+        $this->savePipedriveResources($notification->toPipedrive($notifiable));
+
+    }
+
+    private function savePipedriveResources(PipedriveMessage $message) {
+        foreach ($message->deals as $deal) {
+            $deal->setClient($this->client, $this->token);
+            $deal->save();
+        }
+
+        foreach ($message->activities as $activity) {
+            $activity->setClient($this->client, $this->token);
+            $activity->save();
+        }
+    }
+
+    private function validate($notification) {
         if (is_null($this->token)) {
             throw InvalidConfiguration::noTokenProvided();
         }
 
         if (! method_exists($notification, 'toPipedrive')) {
             throw InvalidConfiguration::noToPipedriveMethod();
-        }
-
-        $pipedriveMessage = $notification->toPipedrive($notifiable);
-
-        foreach ($pipedriveMessage->deals as $deal) {
-            $deal->setClient($this->client, $this->token);
-            $deal->save();
-        }
-
-        foreach ($pipedriveMessage->activities as $activity) {
-            $activity->setClient($this->client, $this->token);
-            $activity->save();
         }
     }
 }
