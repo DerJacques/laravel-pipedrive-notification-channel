@@ -100,6 +100,20 @@ class ChannelTest extends TestCase
         $channel = new PipedriveChannel($client);
         $channel->send(new TestNotifiableWithoutPipedriveToken(), new CreateDealWithActivitiesNotification());
     }
+
+    /**
+     * @test
+     */
+    public function it_throws_an_exception_if_no_to_pipedrive_method_is_provided()
+    {
+        $this->setExpectedException(InvalidConfiguration::class);
+
+        $resource = new TestResource();
+        $client = Mockery::mock(Client::class);
+
+        $channel = new PipedriveChannel($client);
+        $channel->send(new TestNotifiable(), new NotificationWithoutToPipedriveMethod());
+    }
 }
 
 class TestNotifiable
@@ -119,6 +133,11 @@ class TestNotifiableWithoutPipedriveToken
     public function routeNotificationForPipedrive()
     {
     }
+}
+
+class NotificationWithoutToPipedriveMethod extends Notification
+{
+
 }
 
 class CreateDealWithActivitiesNotification extends Notification

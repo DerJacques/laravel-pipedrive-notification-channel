@@ -24,6 +24,10 @@ class PipedriveChannel
             throw InvalidConfiguration::noTokenProvided();
         }
 
+        if (! method_exists($notification, 'toPipedrive')) {
+            throw InvalidConfiguration::noToPipedriveMethod();
+        }
+
         $pipedriveMessage = $notification->toPipedrive($notifiable);
 
         foreach ($pipedriveMessage->deals as $deal) {

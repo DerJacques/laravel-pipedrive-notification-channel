@@ -13,4 +13,9 @@ class InvalidConfiguration extends \Exception
     {
         return new static('Before saving a Pipedrive resource, you need to use `$resource->setClient($client, $token)` to set both request client (e.g. Guzzle) and a Pipedrive token.');
     }
+
+    public static function noToPipedriveMethod()
+    {
+        return new static('Notification has no `toPipedrive` method.');
+    }
 }
