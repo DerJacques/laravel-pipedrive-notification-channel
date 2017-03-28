@@ -137,7 +137,6 @@ class TestNotifiableWithoutPipedriveToken
 
 class NotificationWithoutToPipedriveMethod extends Notification
 {
-
 }
 
 class CreateDealWithActivitiesNotification extends Notification
