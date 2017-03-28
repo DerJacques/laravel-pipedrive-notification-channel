@@ -62,17 +62,9 @@ class PipedriveResource
 
     public function save()
     {
-        if (is_null($this->client) || is_null($this->token)) {
-            throw InvalidConfiguration::noClientProvided();
-        }
+        $this->checkConfiguration();
 
-        if ($this->isNew()) {
-            $response = $this->create($this->toPipedriveArray(), $this->client, $this->token);
-        }
-
-        if (! $this->isNew()) {
-            $response = $this->update($this->toPipedriveArray(), $this->client, $this->token);
-        }
+        $response = $this->sendRequest();
 
         if ($response->getStatusCode() >= 300 || $response->getStatusCode() <= 19) {
             throw FailedRequest::rejected($response->getStatusCode());
@@ -113,6 +105,24 @@ class PipedriveResource
                 $child->save();
             }
         }
+    }
+
+    private function checkConfiguration() {
+        if (is_null($this->client) || is_null($this->token)) {
+            throw InvalidConfiguration::noClientProvided();
+        }
+    }
+
+    private function sendRequest() {
+        if ($this->isNew()) {
+            $response = $this->create($this->toPipedriveArray());
+        }
+
+        else {
+            $response = $this->update($this->toPipedriveArray());
+        }
+
+        return $response;
     }
 
     public function toPipedriveArray()
