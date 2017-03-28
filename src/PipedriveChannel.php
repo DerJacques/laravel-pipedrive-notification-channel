@@ -22,10 +22,10 @@ class PipedriveChannel
         $this->validate($notification);
 
         $this->savePipedriveResources($notification->toPipedrive($notifiable));
-
     }
 
-    private function savePipedriveResources(PipedriveMessage $message) {
+    private function savePipedriveResources(PipedriveMessage $message)
+    {
         foreach ($message->deals as $deal) {
             $deal->setClient($this->client, $this->token);
             $deal->save();
@@ -37,7 +37,8 @@ class PipedriveChannel
         }
     }
 
-    private function validate($notification) {
+    private function validate($notification)
+    {
         if (is_null($this->token)) {
             throw InvalidConfiguration::noTokenProvided();
         }
