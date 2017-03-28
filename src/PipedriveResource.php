@@ -3,24 +3,41 @@
 namespace DerJacques\PipedriveNotifications;
 
 use GuzzleHttp\Client;
+use DerJacques\PipedriveNotifications\Exceptions\FailedRequest;
+use DerJacques\PipedriveNotifications\Exceptions\InvalidConfiguration;
 
 class PipedriveResource
 {
-    public $client;
-
+    protected $client = null;
+    protected $token = null;
     protected $hasMany = [];
     protected $required = [];
+    protected $plural = null;
+    protected $singular = null;
+    protected $id = null;
 
     const API_ENDPOINT = 'https://api.pipedrive.com/v1/';
 
-    private function getPluralisName()
+    public function id(int $id = null)
     {
-        return isset($this->pluralis) ? $this->pluralis : strtolower((new \ReflectionClass($this))->getShortName()).'s';
+        $this->id = $id;
+
+        return $this;
     }
 
-    private function getSingularisName()
+    public function getId()
     {
-        return isset($this->singularis) ? $this->singularis : strtolower((new \ReflectionClass($this))->getShortName());
+        return $this->id;
+    }
+
+    public function getPluralName()
+    {
+        return !is_null($this->plural) ? $this->plural : strtolower((new \ReflectionClass($this))->getShortName()).'s';
+    }
+
+    public function getSingularName()
+    {
+        return !is_null($this->singular) ? $this->singular : strtolower((new \ReflectionClass($this))->getShortName());
     }
 
     public function setClient($client, $token)
@@ -29,8 +46,25 @@ class PipedriveResource
         $this->token = $token;
     }
 
+    public function getClient() {
+        return $this->client;
+    }
+
+    public function getToken() {
+        return $this->token;
+    }
+
+    public function isNew()
+    {
+        return is_null($this->id);
+    }
+
     public function save()
     {
+        if (is_null($this->client) || is_null($this->token)) {
+            throw InvalidConfiguration::noClientProvided();
+        }
+
         if ($this->isNew()) {
             $response = $this->create($this->toPipedriveArray(), $this->client, $this->token);
         }
@@ -40,7 +74,7 @@ class PipedriveResource
         }
 
         if ($response->getStatusCode() >= 300 || $response->getStatusCode() <= 19) {
-            throw new Exception('Request failed');
+            throw FailedRequest::rejected($response->getStatusCode());
         }
 
         $this->saveRelationships(json_decode($response->getBody())->data->id);
@@ -52,18 +86,18 @@ class PipedriveResource
     {
         foreach ($this->required as $requiredField) {
             if (! array_key_exists($requiredField, $attributes)) {
-                throw new Exception($requiredField.' required');
+                throw FailedRequest::missingRequiredAttribute($requiredField);
             }
         }
 
-        return $this->client->request('POST', self::API_ENDPOINT.$this->getPluralisName().'?api_token='.$this->token, [
+        return $this->client->request('POST', self::API_ENDPOINT.$this->getPluralName().'?api_token='.$this->token, [
             'form_params' => $attributes,
         ]);
     }
 
     protected function update($attributes)
     {
-        return $this->client->request('PUT', self::API_ENDPOINT.$this->getPluralisName().'/'.$this->getId().'?api_token='.$this->token, [
+        return $this->client->request('PUT', self::API_ENDPOINT.$this->getPluralName().'/'.$this->getId().'?api_token='.$this->token, [
             'form_params' => $attributes,
         ]);
     }
@@ -72,11 +106,16 @@ class PipedriveResource
     {
         foreach ($this->hasMany as $relationship) {
             foreach ($this->$relationship as $child) {
-                $parent = $this->getSingularisName();
+                $parent = $this->getSingularName();
                 $child->$parent($parentId);
                 $child->setClient($this->client, $this->token);
                 $child->save();
             }
         }
+    }
+
+    public function toPipedriveArray()
+    {
+        return [];
     }
 }

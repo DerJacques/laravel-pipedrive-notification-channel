@@ -8,7 +8,6 @@ use DerJacques\PipedriveNotifications\PipedriveResource;
 class Deal extends PipedriveResource
 {
     private $title;
-    private $id;
     private $value;
     private $currency;
     private $visibleTo;
@@ -48,13 +47,6 @@ class Deal extends PipedriveResource
     public function title(string $title = null)
     {
         $this->title = $title;
-
-        return $this;
-    }
-
-    public function id(int $id = null)
-    {
-        $this->id = $id;
 
         return $this;
     }

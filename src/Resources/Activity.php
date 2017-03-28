@@ -7,7 +7,6 @@ use DerJacques\PipedriveNotifications\PipedriveResource;
 
 class Activity extends PipedriveResource
 {
-    protected $id;
     protected $subject;
     protected $type;
     protected $dueDate;
@@ -15,20 +14,13 @@ class Activity extends PipedriveResource
     protected $dealId;
     protected $userId;
 
-    protected $pluralis = 'activities';
-    protected $singularis = 'activity';
+    protected $plural = 'activities';
+    protected $singular = 'activity';
 
     protected $required = [
         'type',
         'subject',
     ];
-
-    public function id(int $id = null)
-    {
-        $this->id = $id;
-
-        return $this;
-    }
 
     public function subject(string $subject)
     {
@@ -78,16 +70,6 @@ class Activity extends PipedriveResource
         $this->userId = $userId;
 
         return $this;
-    }
-
-    public function isNew()
-    {
-        return is_null($this->id);
-    }
-
-    public function getId()
-    {
-        return $this->id;
     }
 
     public function toPipedriveArray()

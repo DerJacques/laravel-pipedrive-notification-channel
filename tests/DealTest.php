@@ -20,15 +20,6 @@ class DealTest extends TestCase
     /**
      * @test
      */
-    public function it_can_be_assigned_an_id()
-    {
-        $this->deal->id(5);
-        $this->assertEquals(5, $this->deal->getId());
-    }
-
-    /**
-     * @test
-     */
     public function it_can_be_assigned_a_title()
     {
         $this->deal->title('Title');
