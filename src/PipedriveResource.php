@@ -2,7 +2,6 @@
 
 namespace DerJacques\PipedriveNotifications;
 
-use GuzzleHttp\Client;
 use DerJacques\PipedriveNotifications\Exceptions\FailedRequest;
 use DerJacques\PipedriveNotifications\Exceptions\InvalidConfiguration;
 
