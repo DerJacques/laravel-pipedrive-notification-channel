@@ -35,6 +35,11 @@ class PipedriveChannel
             $activity->setClient($this->client, $this->token);
             $activity->save();
         }
+
+        foreach ($message->notes as $note) {
+            $note->setClient($this->client, $this->token);
+            $note->save();
+        }
     }
 
     private function validate($notification)

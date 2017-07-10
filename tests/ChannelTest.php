@@ -84,6 +84,17 @@ class ChannelTest extends TestCase
                 ])
             ->andReturn($response);
 
+        $client->shouldReceive('request')
+            ->once()
+            ->with('POST', 'https://api.pipedrive.com/v1/notes?api_token=PipedriveToken',
+                [
+                    'form_params' => [
+                        'deal_id'  => 1,
+                        'content'  => 'Customer bought milk',
+                    ],
+                ])
+            ->andReturn($response);
+
         $channel = new PipedriveChannel($client);
         $channel->send(new TestNotifiable(), new CreateDealWithActivitiesNotification());
     }
@@ -165,6 +176,10 @@ class CreateDealWithActivitiesNotification extends Notification
                     $activity->subject('Buy milk')
                              ->type('shopping')
                              ->due('2017-12-18');
+                })
+                ->note(function ($note) {
+                    $note->deal(1)
+                         ->content('Customer bought milk');
                 });
     }
 }
