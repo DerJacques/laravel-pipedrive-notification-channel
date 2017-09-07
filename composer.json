@@ -13,7 +13,8 @@
   "require": {
     "php": ">=7.0.0",
     "guzzlehttp/guzzle": "~6.2",
-    "illuminate/notifications": "^5.5"
+    "illuminate/notifications": "^5.5",
+    "illuminate/support": "^5.5"
   },
   "require-dev": {
     "mockery/mockery": "^0.9.5",
